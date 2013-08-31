@@ -11,7 +11,7 @@ Example Use
 IRC Server
 ----------
 
-Run ``erl -name erlirc -pa ebin`` and run the following commands in
+Run ``erl -name erlirc@localhost -pa ebin`` and run the following commands in
 the erlang shell::
 
   (erlirc@bete.ran)1> irc_app:start().
