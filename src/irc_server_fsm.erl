@@ -16,10 +16,10 @@
 -export([start/3]).
 
 -export([connecting/2,
-	 login_pass/2,
-	 login_nick/2,
-	 login_user/2,
-	 connected/2,
+     login_pass/2,
+     login_nick/2,
+     login_user/2,
+     connected/2,
          closing/2]).
 
 %% gen_fsm callbacks
@@ -43,7 +43,7 @@
 %% does not return until Module:init/1 has returned.  
 %%--------------------------------------------------------------------
 start(Server, Socket, Options) when (is_port(Socket) or is_pid(Socket)),
-				    is_list(Options), is_pid(Server) ->
+                    is_list(Options), is_pid(Server) ->
     {ok, Fsm} = gen_fsm:start(?MODULE, [{server, Server},{socket, true}|Options], []),
     SendFn = fun irc_server_fsm_send/2,
     {ok, Pid} = irc_connection:sock_start(Fsm, Socket,
@@ -102,11 +102,11 @@ login_nick({irc, _, #irc_cmd{name=nick, args=Args}},
            S = #state{server_mod=M, user=U}) ->
     Name = proplists:get_value(name, Args),
     case M:nick(S#state.server, Name, S#state.pass) of
-	{ok, GprocUserName} ->
+    {ok, GprocUserName} ->
             true = gproc:reg(GprocUserName, self()),
-	    {next_state, login_user, S#state{user=U#user{nick=Name}}};
-	{error, Numeric, Reason} ->
-	    numreply(S, Numeric, Reason),
+        {next_state, login_user, S#state{user=U#user{nick=Name}}};
+    {error, Numeric, Reason} ->
+        numreply(S, Numeric, Reason),
             {next_state, login_nick, S}
     end;
 login_nick({irc, _, _}, State) ->
@@ -172,9 +172,9 @@ closing({irc, _Con, _Cmd}, State) ->
 %%--------------------------------------------------------------------
 %% Function: 
 %% handle_event(Event, StateName, State) -> {next_state, NextStateName, 
-%%						  NextState} |
+%%                          NextState} |
 %%                                          {next_state, NextStateName, 
-%%					          NextState, Timeout} |
+%%                              NextState, Timeout} |
 %%                                          {stop, Reason, NewState}
 %% Description: Whenever a gen_fsm receives an event sent using
 %% gen_fsm:send_all_state_event/2, this function is called to handle

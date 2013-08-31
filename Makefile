@@ -6,24 +6,24 @@ APP          := erlirc
 all: erl ebin/$(APP).app
 
 erl: ebin lib
-	@$(ERL) -pa $(EBIN_DIRS) -noinput +B \
-	  -eval 'case make:all() of up_to_date -> halt(0); error -> halt(1) end.'
+    @$(ERL) -pa $(EBIN_DIRS) -noinput +B \
+      -eval 'case make:all() of up_to_date -> halt(0); error -> halt(1) end.'
 
 docs:
-	@erl -noshell -run edoc_run application '$(APP)' '"."' '[]'
+    @erl -noshell -run edoc_run application '$(APP)' '"."' '[]'
 
 clean: 
-	@echo "removing:"
-	@rm -fv ebin/*.beam ebin/*.app
+    @echo "removing:"
+    @rm -fv ebin/*.beam ebin/*.app
 
 ebin/$(APP).app: src/$(APP).app
-	@cp -v src/$(APP).app $@
+    @cp -v src/$(APP).app $@
 
 ebin:
-	@mkdir ebin
+    @mkdir ebin
 
 lib:
-	@mkdir lib
+    @mkdir lib
 
 dialyzer: erl
-	@dialyzer -c ebin
+    @dialyzer -c ebin

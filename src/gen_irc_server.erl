@@ -137,15 +137,15 @@ handle_call(irc_server, _From, S = #state{server=Server}) ->
     {reply, Server, S};
 handle_call({listen, Addr, Port}, _From, State = #state{listeners=L, server=IrcServer}) ->
     case gen_tcp_server:listen(Addr,
-			       Port,
-			       [{client_handler,
-				 fun (Server, Sock) -> new_client(Server, Sock, IrcServer) end},
-				{reuseaddr, true},
-				{packet, line}]) of
-	{ok, Server} ->
-	    {reply, {ok, Server}, State#state{listeners=[Server|L]}};
-	Else ->
-	    {reply, Else, State}
+                   Port,
+                   [{client_handler,
+                 fun (Server, Sock) -> new_client(Server, Sock, IrcServer) end},
+                {reuseaddr, true},
+                {packet, line}]) of
+    {ok, Server} ->
+        {reply, {ok, Server}, State#state{listeners=[Server|L]}};
+    Else ->
+        {reply, Else, State}
     end;
 handle_call({nick, Pid, Nick, Pass}, _From, S = #state{server=Server})
   when is_pid(Pid) ->

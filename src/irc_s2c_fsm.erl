@@ -16,10 +16,10 @@
 -export([sock_start/3]).
 
 -export([connecting/2,
-	 login_pass/2,
-	 login_nick/2,
-	 login_user/2,
-	 connected/2,
+     login_pass/2,
+     login_nick/2,
+     login_user/2,
+     connected/2,
          closing/2]).
 
 %% gen_fsm callbacks
@@ -38,7 +38,7 @@
 %%====================================================================
 
 sock_start(Server, Socket, Options) when (is_port(Socket) or is_pid(Socket)),
-				    is_list(Options), is_pid(Server) ->
+                    is_list(Options), is_pid(Server) ->
     IrcServer = proplists:get_value(irc_server, Options),
     {ok, Fsm} = gen_fsm:start(?MODULE, [{irc_server, IrcServer}], []),
     {ok, Pid} = irc_connection:sock_start(Fsm, Socket,
@@ -95,12 +95,12 @@ login_nick({irc, _, #irc_cmd{name=nick, args=Args}},
     receive
         {irc, server, Ref, _Server, {ok, GprocUserName}} ->
             true = gproc:reg(GprocUserName, self()),
-	    {next_state, login_user, S#state{user=U#user{nick=Name}}};
+        {next_state, login_user, S#state{user=U#user{nick=Name}}};
         {irc, server, Ref, _Server, {error, nicknameinuse}} ->
             numreply(S, nicknameinuse, "That nickname is already taken"),
             {next_state, login_nick, S};
-	{irc, server, Ref, _Server, {error, Numeric}} ->
-	    numreply(S, Numeric, ""),
+    {irc, server, Ref, _Server, {error, Numeric}} ->
+        numreply(S, Numeric, ""),
             {next_state, login_nick, S};
         {'DOWN', Ref, process, _Server, Err} ->
             {stop, {irc_server_error, Err}, S}
@@ -173,9 +173,9 @@ closing({irc, _Con, _Cmd}, State) ->
 %%--------------------------------------------------------------------
 %% Function: 
 %% handle_event(Event, StateName, State) -> {next_state, NextStateName, 
-%%						  NextState} |
+%%                          NextState} |
 %%                                          {next_state, NextStateName, 
-%%					          NextState, Timeout} |
+%%                              NextState, Timeout} |
 %%                                          {stop, Reason, NewState}
 %% Description: Whenever a gen_fsm receives an event sent using
 %% gen_fsm:send_all_state_event/2, this function is called to handle
@@ -286,8 +286,8 @@ join([Channel | Rest], S) ->
                                          undefined -> [NewChan|S#state.chans];
                                          _ -> S#state.chans
                                      end});
-	{irc, channel, Ref, _Server, {error, Numeric}} ->
-	    numreply(S, Numeric, ""),
+    {irc, channel, Ref, _Server, {error, Numeric}} ->
+        numreply(S, Numeric, ""),
             {next_state, connected, S};
         {'DOWN', Ref, process, _Server, Err} ->
             {stop, {irc_server_error, Err}, S}

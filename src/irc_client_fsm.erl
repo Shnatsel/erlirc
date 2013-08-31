@@ -300,9 +300,9 @@ joining_channel(E = {irc, _Pid, C}, State) ->
 %%--------------------------------------------------------------------
 %% Function: 
 %% handle_event(Event, StateName, State) -> {next_state, NextStateName, 
-%%						  NextState} |
+%%                          NextState} |
 %%                                          {next_state, NextStateName, 
-%%					          NextState, Timeout} |
+%%                              NextState, Timeout} |
 %%                                          {stop, Reason, NewState}
 %% Description: Whenever a gen_fsm receives an event sent using
 %% gen_fsm:send_all_state_event/2, this function is called to handle

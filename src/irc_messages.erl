@@ -155,8 +155,8 @@ parse_nick(Nick) ->
 
 parse_user(Cmd, {[UserName, Mode, _Unused], RealName}) ->
     Cmd#irc_cmd{args=[{user_name, UserName},
-		      {real_name, RealName},
-		      {mode, Mode}]}.
+              {real_name, RealName},
+              {mode, Mode}]}.
 
 list_to_chantype("@") -> secret;
 list_to_chantype("*") -> private;

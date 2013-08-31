@@ -76,10 +76,10 @@ config(Item) ->
 
 ensure_started(App) ->
     case application:start(App) of
-	ok ->
-	    true;
-	{error, {already_started, App}} ->
-	    true;
+    ok ->
+        true;
+    {error, {already_started, App}} ->
+        true;
         Else ->
             error_logger:error_msg("Couldn't start ~p: ~p", [App, Else]),
             Else
