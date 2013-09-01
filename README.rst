@@ -33,7 +33,7 @@ IRC commands::
 IRC Client
 ----------
 
-Run ``erl -name client -pa ebin`` and run the following commands in
+Run ``erl -name client@localhost -pa ebin`` and run the following commands in
 the erlang shell::
 
   (erlirc@bete.ran)1> {ok, C} = irc_client_fsm:start_link("erlirc","localhost", 16667).
